@@ -7,8 +7,8 @@
 #define LOG(x) Serial.print(x)
 #define BAUD_RATE 115200
 
-const char* wifi_ssid = "2.4GHz Net virtua apt902";
-const char* wifi_pass = "3132707000";
+const char* wifi_ssid = "SSID";
+const char* wifi_pass = "PASSWORD";
 
 void setup()
 {
@@ -19,7 +19,7 @@ void setup()
 	WiFi.begin(wifi_ssid, wifi_pass);
 
 	LOG("\nConnecting to WiFi");
-	while (WiFi.status() != WL_CONNECTED) {  
+	while (WiFi.status() != WL_CONNECTED) {
 		delay(500);
 		LOG(".");
 	}
