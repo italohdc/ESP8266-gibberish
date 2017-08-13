@@ -1,5 +1,6 @@
 // Using Arduino IDE
 // NodeMCU 1.0 (ESP-12E Module), 80MHz, 115200, 4M (1M SPIFFS)
+//#include "lelis.h"
 
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
@@ -48,19 +49,27 @@ void setup_wifi ()
 void setup_mqtt ()
 {
 	client.setServer(mqtt_server, mqtt_port);
-	//client.setCallback(mqtt_callback);
+	client.setCallback(mqtt_callback);
 	mqtt_connect();
 }
 
-void mqtt_callback ()
-{}
+void mqtt_callback(char* topic, byte* payload, unsigned int length) {
+  LOG("\nMessage arrived [");
+  LOG(topic);
+  LOG("] ");
+  for (int i = 0; i < length; i++) {
+    LOG((char)payload[i]);
+  }
+}
 
 void mqtt_connect ()
 {
 	while( !client.connected() )
 	{
+		LOG("\nAttempting MQTT connection...");
 		if(client.connect("ESP8266-gibberish"))
 		{
+			LOG("connected");
 			client.publish("ESP8266-gibberish/connection status", "Connected!");
 			LOG("\nConnected and sent!");
 		}
@@ -76,4 +85,5 @@ uint16_t read_ldr ()
 void loop()
 {
 	if( !client.connected() ) mqtt_connect();
+	client.loop();
 }
