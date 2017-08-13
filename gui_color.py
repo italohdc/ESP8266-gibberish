@@ -4,9 +4,9 @@ from tkinter import *#messagebox
 import mqtt_receiver as mqtt
 
 window = tkinter.Tk()
-window_width=1600
-window_height=920
-update_delay = 1
+window_width=420
+window_height=240
+update_delay = 60
 
 black_lvl = 0
 window_color = '#%02x%02x%02x' % (black_lvl, black_lvl, black_lvl)
@@ -20,10 +20,10 @@ def black_level(level):
 
 my_canvas = tkinter.Canvas(window, bg=window_color, height=window_height, width=window_width, cursor='dot')
 
-textbox_xy = [[50,50],[50,200],[500,200],[500,50]]
+textbox_xy = [[20,20],[20,60],[100,60],[100,20]]
 textbox = my_canvas.create_polygon(textbox_xy, fill='white')
 
-text_xy = [125,125]
+text_xy = [60,40]
 # text_font = ('Helvetica', 36, 'italic')
 text = my_canvas.create_text(text_xy, fill="black")
 
