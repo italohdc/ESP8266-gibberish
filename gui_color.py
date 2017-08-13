@@ -1,10 +1,11 @@
 import tkinter
 from tkinter import *#messagebox
+# from tkinter import font
 import mqtt_receiver as mqtt
 
 window = tkinter.Tk()
-window_width=1024
-window_height=768
+window_width=1600
+window_height=920
 update_delay = 1
 
 black_lvl = 0
@@ -21,19 +22,19 @@ my_canvas = tkinter.Canvas(window, bg=window_color, height=window_height, width=
 
 textbox_xy = [[50,50],[50,200],[500,200],[500,50]]
 textbox = my_canvas.create_polygon(textbox_xy, fill='white')
-	#my_canvas.itemconfig(textbox, fill='blue')
 
-# text_xy = [60,60]
-# text = tkinter.Text(window, height=100, width=30)
-# text.insert(INSERT, "Hello World!")
+text_xy = [125,125]
+# text_font = ('Helvetica', 36, 'italic')
+text = my_canvas.create_text(text_xy, fill="black")
 
 def range_black(lvl):
 	return int(lvl*0.2493)
 
 def update():
+	sensor = mqtt.read_topic()
+	black_level( range_black(sensor) )
 
-	black_level( range_black(mqtt.read_topic()) )
-
+	my_canvas.itemconfig(text, text=str(sensor))
 	my_canvas.config(bg=window_color)
 	my_canvas.after(update_delay, update)
 
