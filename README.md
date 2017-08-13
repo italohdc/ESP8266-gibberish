@@ -5,9 +5,15 @@ Doing gibberish stuff with a ESP8266
 
 ## ESP8266 Random
 
+### Libraries
+
+\#include <[PubSubClient.h](https://github.com/knolleary/pubsubclient)>
+
 ### Errors found
 
-* For some reason, when using Serial Monitor on Arduino IDE, the information sent through ``Serial.print("Lorem Ipsum")`` only start printing after some write was made (not sure yet if after any x characters or after x ``\n`` characters).
-* For some reason, uploading firmware works better when using 1M Flash. (And also solves the above problem) 🤷‍♂️
+* ~~For some reason, when using Serial Monitor on Arduino IDE, the information sent through ``Serial.print("Lorem Ipsum")`` only start printing after some write was made (not sure yet if after any x characters or after x ``\n`` characters).~~
+* Uploading firmware works better when using 1M Flash. (And also solves the above problem) 🤷‍♂️
+
+---
 
 ```Enquanto fazia pão de queijo```
