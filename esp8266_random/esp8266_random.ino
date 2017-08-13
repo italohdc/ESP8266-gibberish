@@ -3,6 +3,7 @@
 
 #include <Arduino.h>
 #include <ESP8266WiFi.h>
+#include <PubSubClient.h>
 
 #define LOG(x) Serial.print(x)
 #define BAUD_RATE 115200
@@ -12,6 +13,11 @@
 
 const char* wifi_ssid = "SSID";
 const char* wifi_pass = "PASSWORD";
+const char* mqtt_server = "broker.hivemq.com";//"broker.mqtt-dashboard.com";
+const uint16_t mqtt_port = 1883;
+
+WiFiClient espClient;
+PubSubClient client(espClient);
 
 void setup()
 {
@@ -20,7 +26,13 @@ void setup()
 	LOG("\n-- ESP8266 NodeMCU ESP-12E --\n");
 
 	pinMode(PIN_BUILTIN_LED, OUTPUT);
+	setup_wifi();
+	setup_mqtt();
+	LOG("\n");
+}
 
+void setup_wifi ()
+{
 	WiFi.begin(wifi_ssid, wifi_pass);
 	LOG("\nConnecting to WiFi");
 	while (WiFi.status() != WL_CONNECTED) {
@@ -29,10 +41,39 @@ void setup()
 		digitalWrite(PIN_BUILTIN_LED, !LOW);
 	}
 	LOG("\nWiFi connected");
+	LOG("\nLocal IP Address: ");
+	LOG(WiFi.localIP());
+}
+
+void setup_mqtt ()
+{
+	client.setServer(mqtt_server, mqtt_port);
+	//client.setCallback(mqtt_callback);
+	mqtt_connect();
+}
+
+void mqtt_callback ()
+{}
+
+void mqtt_connect ()
+{
+	while( !client.connected() )
+	{
+		if(client.connect("ESP8266-gibberish"))
+		{
+			client.publish("ESP8266-gibberish/connection status", "Connected!");
+			LOG("\nConnected and sent!");
+		}
+		delay(5000);
+	}
+}
+
+uint16_t read_ldr ()
+{
+	return analogRead(PIN_LDR);
 }
 
 void loop()
 {
-	int value = analogRead(PIN_LDR);
-	Serial.println(value);
+	if( !client.connected() ) mqtt_connect();
 }

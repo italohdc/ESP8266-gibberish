@@ -16,4 +16,5 @@ Doing gibberish stuff with a ESP8266
 
 ---
 
+```Definition of I. for Broker: "Pior ainda, tudo que você for fazer com ele, estará quebrado"```
 ```Enquanto fazia pão de queijo```
