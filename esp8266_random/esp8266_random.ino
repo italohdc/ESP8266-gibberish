@@ -14,7 +14,7 @@
 
 const char* wifi_ssid = "SSID";
 const char* wifi_pass = "PASSWORD";
-const char* mqtt_server = "broker.hivemq.com";//"broker.mqtt-dashboard.com";
+const char* mqtt_server = "broker.mqtt-dashboard.com";
 const uint16_t mqtt_port = 1883;
 
 WiFiClient espClient;
@@ -70,10 +70,15 @@ void mqtt_connect ()
 		if(client.connect("ESP8266-gibberish"))
 		{
 			LOG("connected");
-			client.publish("ESP8266-gibberish/connection status", "Connected!");
-			LOG("\nConnected and sent!");
+			client.publish("ESP8266-gibberish/status", "Connected!");
 		}
-		delay(5000);
+		else
+		{
+			LOG("failed, rc=");
+			LOG(client.state());
+			LOG(" try again in 5 seconds");
+			delay(5000);
+		}
 	}
 }
 
@@ -86,4 +91,25 @@ void loop()
 {
 	if( !client.connected() ) mqtt_connect();
 	client.loop();
+
+	LOG("\n");
+	LOG(read_ldr());
+
+	String sensor_value = String(read_ldr());
+	char word[10];// = sensor_value;
+	//sensor_value.toCharArray(word, 10);
+
+	//word = read_ldr();
+
+	//sprintf(word, "%d", read_ldr());
+
+	for(int i=0; i<10; i++){
+		if(sensor_value[i] == '\0') break;
+	    word[i] = sensor_value[i];
+	}
+
+	//LOG(word);
+
+	client.publish("ESP8266-gibberish/sensors/ldr", word);
+	delay(10);
 }

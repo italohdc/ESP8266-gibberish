@@ -1,4 +1,3 @@
-# import gui_color as gui
 import paho.mqtt.client as mqtt
 
 def on_connect(client, userdata, flags, rc):
