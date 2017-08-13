@@ -28,6 +28,9 @@ In the Python code:
 * Couldn't convert int to char* (not String) using any bult-in method (like ``.toCharArray``, ``String(parameter``, ``sprintf(...)``)). Trying to use a separated function to handle it.
 * On the above issue, note to future self: if you're using C, not py, don't use char*, use char [10].
 
+
+>>If you think the code is a mess, remember it's just a gibberish and no important purpose is intented, it's just a hobbie 😅  
+
 ---
 
 ``Definition of I. for Broker: "Pior ainda, tudo que você for fazer com ele, estará quebrado"``
