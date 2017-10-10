@@ -17,7 +17,7 @@ client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
 
-client.connect("broker.mqtt-dashboard.com", 1883, 60)
+client.connect("iot.eclipse.org", 1883, 60)
 client.subscribe("ESP8266-gibberish/sensors/ldr")
 
 
@@ -26,11 +26,11 @@ def read_topic():
 	received = False
 
 	while(not received):
-		client.loop()
+		client.loop(timeout=1.0)
 
 	delete = "b'@"
 	for char in delete: message = message.replace(char, "")
-	print("LDR:", message, "\n")
+	print("LDR:" + message + "\n")
 	return int(message)
 
 # read_topic()
